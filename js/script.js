@@ -60,11 +60,8 @@ const generateTitleLinks = function(){
 		/* get the article id */
 		const articleId = article.getAttribute('id');
 
-		/* find the title element */
+		/* find the title element & get the title */
 		const articleTitle = article.querySelector(optTitleSelector).innerHTML;
-
-		/* get the title from the title element */
-		
 
 		/* create HTML of the link */
 		const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
@@ -87,4 +84,32 @@ const generateTitleLinks = function(){
 }
 
 generateTitleLinks();
+
+function generateTags(){
+	/* find all articles */
+
+	/* START LOOP: for every article: */
+
+	/* find tags wrapper */
+
+	/* make html variable with empty string */
+
+	/* get tags from data-tags attribute */
+
+	/* split tags into array */
+
+	/* START LOOP: for each tag */
+
+		/* generate HTML of the link */
+
+		/* add generated code to html variable */
+
+	/* END LOOP: for each tag */
+
+	/* insert HTML of all the links into the tags wrapper */
+
+	/* END LOOP: for every article: */
+}
+
+generateTags();
 }
