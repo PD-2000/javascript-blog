@@ -41,7 +41,7 @@
 		optTitleListSelector = '.titles',
 		optArticleTagsSelector = '.post-tags .list',
 		optArticleAuthorSelector = '.post-author',
-		optArticleAuthorsListSelector = '.authors .list';
+		optArticleAuthorsListSelector = '.authors.list';
 
 	const generateTitleLinks = function(customSelector = ''){
 		console.log('Links generated!');
@@ -109,7 +109,7 @@
 			// START LOOP: for each tag
 			for(let tag of articleTagsArray){
 				// generate HTML of the link
-				const linkHTML = '<li><a href="#' + tag + '"><span>' + tag + '</span></a></li>';
+				const linkHTML = '<li><a href="#tag-' + tag + '"><span>' + tag + '</span></a></li>';
 
 				// add generated code to html variable
 				html = html + linkHTML;
@@ -147,7 +147,7 @@
 		// END LOOP: for each active tag link
 
 		// find all tag links with "href" attribute equal to the "href" constant
-		const hrefTags = document.querySelectorAll('a[href="' + href + '"]');
+		const hrefTags = document.querySelectorAll('a[href="#tag-' + href + '"]');
 
 		// START LOOP: for each found tag link
 		for(let hrefTag of hrefTags){
@@ -220,7 +220,7 @@
 		let allAuthorsHTML = '';
 
 		// START LOOP: for each author in allAuthors
-		for(let author of allAuthors){
+		for(let author in allAuthors){
 			// generate code of a link and insert it to allAuthorsHTML
 			allAuthorsHTML += author + ' (' + allAuthors[author] + ') ';
 		}
@@ -242,7 +242,7 @@
 		const href = clickedElement.getAttribute('href');
 
 		// make an author constant and get author from href
-		const author = href.replace('#author=', '');
+		const author = href.replace('#author-', '');
 
 		// find all active author links
 		const activeAuthors = document.querySelectorAll('a.active[href^="#author-"]');
@@ -265,7 +265,7 @@
 		// END LOOP: for each found author link
 
 		// execute generateTitleLinks with article selector argument
-		generateTitleLinks('[data-author ="' + author + '"]');
+		generateTitleLinks('[data-author="' + author + '"]');
 	};
 
 	const addClickListenersToAuthors = function(){
