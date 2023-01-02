@@ -3,7 +3,7 @@
 	const titleClickHandler = function(event){
 		event.preventDefault();
 		const clickedElement = this;
-		console.log('Link was clicked!');
+		/*console.log('Link was clicked!');*/
 
 		// remove class 'active' from all article links
 		const activeLinks = document.querySelectorAll('.titles a.active');
@@ -12,9 +12,9 @@
 			activeLink.classList.remove('active');
 		}
 
-		// add class 'active' to the clicked link
-		console.log('clickedElement:', clickedElement);
+		/*console.log('clickedElement:', clickedElement);*/
 
+		// add class 'active' to the clicked link
 		clickedElement.classList.add('active');
 
 		// remove class 'active' from all articles
@@ -26,8 +26,7 @@
 
 		// get 'href' attribute from the clicked link
 		const articleSelector = clickedElement.getAttribute('href');
-		
-		console.log(articleSelector);
+		/*console.log(articleSelector);*/
 
 		// find the correct article using the selector (value of 'href' attribute)
 		const targetArticle = document.querySelector(articleSelector);
@@ -41,11 +40,14 @@
 		optTitleListSelector = '.titles',
 		optArticleTagsSelector = '.post-tags .list',
 		optArticleAuthorSelector = '.post-author',
-		optArticleAuthorsListSelector = '.authors.list';
+		optArticleAuthorsListSelector = '.authors.list',
+		optTagsListSelector = '.tags.list',
+		optCloudClassCount = 5,
+		optCloudClassPrefix = 'tag-size-';
 
 	const generateTitleLinks = function(customSelector = ''){
-		console.log('Links generated!');
-		console.log('customSelector: ' + customSelector);
+		/*console.log('Links generated!');*/
+		/*console.log('customSelector: ' + customSelector);*/
 
 		// remove contents of titleList
 		const titleList = document.querySelector(optTitleListSelector);
@@ -69,18 +71,17 @@
 
 			// create HTML of the link
 			const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
-			console.log(linkHTML);
+			/*console.log(linkHTML);*/
 
 			// insert link into titleList
 			html = html + linkHTML;
-			/*titleList.insertAdjacentHTML('afterend', linkHTML);*/
-			console.log(html);
+			/*console.log(html);*/
 		}
 
 		titleList.innerHTML = html;
 
 		const links = document.querySelectorAll('.titles a');
-		console.log(links);
+		/*console.log(links);*/
 
 		for(let link of links){
 			link.addEventListener('click', titleClickHandler);
@@ -88,7 +89,32 @@
 	};
 	generateTitleLinks();
 
+	const calculateTagsParams = function(tags){
+		const params = {
+			min: 999999,
+			max: 0
+		};
+
+		for(let tag in tags){
+			console.log(tag + ' is used ' + tags[tag] + ' times');
+
+			params.max = Math.max(tags[tag], params.max);
+			params.min = Math.min(tags[tag], params.min);
+		}
+
+		return params;
+	};
+
+	const calculateTagClass = function(count, params){
+		const classNumber = Math.floor(((count - params.min) / (params.max - params.min)) * (optCloudClassCount - 1) + 1 );
+
+		return optCloudClassPrefix + classNumber;
+	};
+
 	const generateTags = function(){
+		// create a new variable allTags with an empty array
+		let allTags = {};
+
 		// find all articles
 		const articles = document.querySelectorAll(optArticleSelector);
 
@@ -109,10 +135,20 @@
 			// START LOOP: for each tag
 			for(let tag of articleTagsArray){
 				// generate HTML of the link
-				const linkHTML = '<li><a href="#tag-' + tag + '"><span>' + tag + '</span></a></li>';
+				const linkHTML = '<li><a href="#tag-' + tag + '"><span>&nbsp;' + tag + '&nbsp;</span></a></li>';
 
 				// add generated code to html variable
 				html = html + linkHTML;
+
+				// check if this link is NOT already in allTags
+				if(!allTags[tag]) {
+					// add tag to allTags object
+					allTags[tag] = 1;
+				}
+				else {
+					// increase its occurence count
+					allTags[tag]++;
+				}
 			}
 			// END LOOP: for each tag
 
@@ -120,6 +156,28 @@
 			tagsWrapper.innerHTML = html;
 		}
 		// END LOOP: for every article:
+
+		// find list of tags in right column
+		const tagList = document.querySelector(optTagsListSelector);
+
+		const tagsParams = calculateTagsParams(allTags);
+		console.log('tagsParams:', tagsParams);
+
+		// create variable for all links HTML code
+		let allTagsHTML = '';
+		
+		// START LOOP: for each tag in allTags
+		for(let tag in allTags){
+			const tagLinkHTML = '<li><a class="' + calculateTagClass(allTags[tag], tagsParams) + '" href="#tag-' + tag + '">&nbsp;' + tag + '&nbsp;</a></li>';
+			console.log('tagLinkHTML:', tagLinkHTML);
+
+			// generate code of a link and add it to allTagsHTML
+			allTagsHTML += tagLinkHTML;
+		}
+		// END LOOP: for each tag in allTags
+
+		// add HTML from allTagsHTML to tagList
+		tagList.innerHTML = allTagsHTML;
 	};
 	generateTags();
 
@@ -281,3 +339,7 @@
 	};
 	addClickListenersToAuthors();
 }
+
+/* SIDE NOTES:
++Try to add a "reset filters" button
+*/

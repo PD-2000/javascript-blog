@@ -79,6 +79,10 @@ body {
 	margin: 0;
 	padding: 0;
 
+	.tags {
+		display: inline-flex;
+	}
+
 	.active {
 		font-weight: bold;
 	}
@@ -86,6 +90,29 @@ body {
 
 .list-horizontal li {
 	display: inline-block;
+}
+
+.tag-size {
+	&-1 {
+		color: rgb(104, 200, 0);
+		font-size: 95%;
+	}
+	&-2 {
+		color: rgb(144, 180, 5);
+		font-size: 120%;
+	}
+	&-3 {
+		color: rgb(184, 160, 10);
+		font-size: 145%;
+	}
+	&-4 {
+		color: rgb(224, 140, 15);
+		font-size: 170%;
+	}
+	&-5 {
+		color: rgb(244, 120, 20);
+		font-size: 195%;
+	}
 }
 
 // AUTHORS
