@@ -1,3 +1,6 @@
+const templates = {
+	articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML)
+};
 'use strict';
 {
 	const opts = {
@@ -73,7 +76,9 @@
 			const articleTitle = article.querySelector(opts.titleSelector).innerHTML;
 
 			// create HTML of the link
-			const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
+			//const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
+			const linkHTMLData = {id: articleId, title: articleTitle};
+			const linkHTML = templates.articleLink(linkHTMLData);
 			/*console.log(linkHTML);*/
 
 			// insert link into titleList
@@ -287,7 +292,7 @@
 		// START LOOP: for each author in allAuthors
 		for(let author in allAuthors){
 			// generate code of a link and insert it to allAuthorsHTML
-			const authorLinkHTML = '<li><a class="' + calculateTagClass(allAuthors[author], authorsParams) + '" href="#tag-' + author + '">&nbsp;' + author + '&nbsp;</a></li>';
+			const authorLinkHTML = '<li><a class="' + calculateTagClass(allAuthors[author], authorsParams) + '" href="#author-' + author + '">&nbsp;' + author + '&nbsp;</a></li>';
 			console.log('authorLinkHTML:', authorLinkHTML);
 
 			// generate code of a link and add it to allAuthorsHTML

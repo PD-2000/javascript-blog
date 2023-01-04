@@ -64,6 +64,11 @@ body {
 	border-radius: 5px;
 }
 
+.sidebar .list.tags .li,
+.sidebar .list.authors .li {
+	display: inline-block;
+}
+
 // LOGO
 .logo {
 	font-family: $font-logo;
