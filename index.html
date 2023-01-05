@@ -374,6 +374,17 @@
 			</a>
 		</li>
 	</script>
+	<script id="template-tag-cloud-link" type="text/x-handlebars-template">
+		<script id="template-tag-cloud-link" type="text/x-handlebars-template">
+			{{#each tags}}
+			<li>
+				<a class="{{ className }}" href="#{{ tag }}">
+					{{ content }} ({{ count }})
+				</a>
+			</li>
+			{{/each}}
+		</script>
+	</script>
 	<script src="js/script.js">
 	</script>
 </body>
