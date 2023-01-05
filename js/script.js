@@ -1,8 +1,8 @@
+'use strict';
 const templates = {
 	articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
 	tagCloudLink: Handlebars.compile(document.querySelector('#template-tag-cloud-link').innerHTML)
 };
-'use strict';
 {
 	const opts = {
 		articleAuthorSelector: '.post-author',
@@ -323,7 +323,7 @@ const templates = {
 			allAuthorsData.tags.push({
 				tag: 'author-' + author,
 				content: author,
-				count: authorList[author],
+				count: allAuthors[author],
 				className: calculateTagClass(authorList[author], authorsParams)
 			});
 		}
